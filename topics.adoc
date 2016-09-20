@@ -1,0 +1,147 @@
+= JEE 2016 topics
+Pieter van den Hombergh
+V 0.2
+:toc: left
+:icons: font
+:description: Initial plan.
+:stem: latexmath
+:source-highlighter: coderay
+
+toc::[]
+
+== Topics 
+This live document presents my first thoughts on the subjects
+in this round of the JEE course and the needs I have for a
+modernization of the SEN1 course from Februari 2017.
+
+First I had a private brain storm on what I found desirable.
+
+Here is the first bullet list, rework into sub paragraphs:
+
+// * Tackling Docker.
+// * Jenkins At Your Service.
+
+// * Intro to dependency injection, concept, theory. *Design to an abstraction, not an implementation*. Using and understanding the reflection way in Java using annotations. (HOM)
+
+// * Mockito to beat the crap out of bugs.
+// * All test data that you can eat.
+
+// ** Where to start, where to stop.
+// ** test strategy, constructing test sets (Theory, HOM).
+// ** test data selection
+// * To ORM Or Not To ORM.
+// * performance tests using link:https://github.com/zolyfarkas/spf4j/[spf4j ^] and/or link:https://github.com/frenchc/jetm[jetm ^]
+// ** evaluate both briefly, than make an initial choice based on the findings.
+// ** Purpose: measurement instrument for ALDA, measure big-O emperically.
+// * Oracle Jet, java script at the front-end picking up loos parts. https socket and things. 
+// * restfull service, is it tasty?
+// * Arquillian, is it as good/complete/well documented as it says 'on the tin'?
+
+=== Be a Maven with Maven
+Or maybe gradle. Standard building technology in Java is maven. Get
+comfortable with maven.
+
+
+=== Tackling Docker.
+Eric Soldierer got it working quickly and help us at getting it to work.
+Turn that into a student task. No rewriting necessary, shotr explanation of the concept, and the initial requirements. Make sure your setup is independent of the docker-host platform (Virtulalisation as with OS-X and Windows or plain container as in Linux.
+
+=== Contineous Building/Deployment with Jenkins
+Jenkins is the most popuplar contineous build framework. Wrap it into a docker and let it play its strengths.
+See if you can find how a Jenkins instance can orchestrate a set of
+tests. Continuous delivery should also be addressed. Maybe there is
+even a more advisable tool/approach in the containerized world.
+
+
+=== Mockito to beat the crap out of bugs.
+Mockito is a very nice stubbing, mocking and spying framework and undergoes active development.
+I am quite impressed at the expresivenes of tests done with Mockito.
+Mockito is a separate library that can be combined in junit or testng tests. Go for the Junit variant.
+Topics to aadress:
+* When NOT to mock, (from the doc), when and what to mock. Is it okay to return a mock as a return value from a mocked class.
+* Impact of using mockito (and any other compromises) on your design, (think modularity, visibilty, *final*ity of methods and classes, need to introduce abstract classes or interfaces etc). 
+
+=== All the test data that you can eat?
+HOM will elaborate on this.
+Testing is an activity that cost time, in particular work time, hence salary. Here cost reduction can be found in setting up tests effectively and efficiently. Do not automate when a test is only to be run once (e.g. a one off script). Testing by hand is sometimes Okay, but always with a script or scenario please. On the other hand, where manual testing can be automated, and the number of expected test runs is high enough, consider writing automated tests. Unit test, integration tests and validation (User Interface) tests.
+All test data that you can eat.
+
+* Where to start, where to stop.
+* test strategy, constructing test sets (Theory, HOM).
+* test data selection
+
+Someone else pick up the following: +
+Efective technologies to test with a lot of tests data would be:
+
+* parameterised test, test sets from files.
+Start with a simple example, then work your way to more complex approaches, using java 8 constructs (Lambda).
+See the olifantysballs exercises.
+
+
+=== ORM or not to ORM.
+* Explanation of the concept
+* Typical frameworks JPA (Hibernate, JPA/Eclipselink).
+** Choices and  Consequences.
+** Specialities, like journaling in Hibernate with an extension.
+** Advantages of well known spec (JPA)
+* Read link:https://blog.jooq.org/2014/04/11/java-8-friday-no-more-need-for-orms/[Java 8 Friday: No More Need for ORMs ^]
+* Using alternatives
+** Simple jdbc
+*** Maybe with some home grown framework to reduce repetition
+** jooq link:http://www.jooq.org/[jooq ^]
+
+=== Measure and know or stay ignorant forever.
+Theory is nice (Alda), sseing (measuring) is accepted more easily by students.
+For ALDA we want to be compare solutions based on the big-O-ness. (stem:[O(n^2), O(n log n)] etc).
+
+* performance tests using link:https://github.com/zolyfarkas/spf4j/[spf4j ^] and/or link:https://github.com/frenchc/jetm[jetm ^]
+** evaluate both briefly, than make an initial choice based on the findings.
+** Purpose: measurement instrument for ALDA, measure big-O emperically.
+** For us (this audience): explain a bit on the used technology in spf4l, most likely instrumentation or aspect orientation or even both.
+
+===  Restfull Service, is it Tasty?
+
+Restful services, in combination with JSON over the wire are the
+current fashion (2016). Let us get our toes wet. In particular it
+looks as if this is the client-server model that is typical in a lot of
+_mobile_ apps, that invariably have a back-end to talk too.
+
+* What are the consequences, for better and for worse. E.g. where do
+  you put (what part of) the business logic run (device/server) and/or what are the
+  consequences about:
+** reliability
+** robustness
+** security
+** parallel use
+
+=== Arquillian, is it as good/complete/well documented as it says 'on the tin'?
+
+For me, arquillian long held the promise to be able to test where it
+always had been hard, in particular in the JEE world. Testability has
+improved a lot, in the first place, because JEE evolved and adapted
+some good ideas from the competition. To name one: Using annotations
+and dependency injection in the spring framework.  This does away with
+a lot of boilerplate and compulsory implementations of abstract
+classes and interface methods. A lot of plumbing to get things done.
+
+Nowadays, JEE can feel even light weight. For that, have a look at
+link:https://www.youtube.com/watch?v=rBt8CaxaBiw[Adam Bien^]s videos on the subject.
+
+=== Oracle Jet, java script at the front-end picking up loos parts. https socket and things.
+
+We have experienced the short intro by Geertjan Wielenga. Now we want to take the next steps.
+In particular, I am interested in _live updates_ some times referred
+to as _real time_, but I believe that is a misnomer. The traditional
+approach was a "long polling". Web sockets and related technologies
+allow the server, or even participants, to send unsolicited data (even
+video).
+
+Sample application: Polling or voting app, in which all devices, and
+in particular the 'quiz masters' display (live web site maybe) is
+updated whenever the server notifies its client(s). For the purpose, a
+mobile website is probably simplest and best as well.
+
+
+
+
+
