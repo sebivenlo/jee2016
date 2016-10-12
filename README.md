@@ -11,4 +11,3 @@ Projects this year:
 * [Oracle Jet](https://github.com/sebivenlo/OracleJET)
  * subproject 1
  * subproject 2
-* 
